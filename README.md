@@ -14,7 +14,7 @@ This was built as a challenge to see if a simple app could be built, only with t
 - [ ] Edit todo
 - [ ] Firestore persistence
 - [x] Native splash screen
-- [ ] Splash screen
+- [x] Splash screen
 - [x] Launcher icon
 - [ ] Dark mode support
 - [ ] Login page
