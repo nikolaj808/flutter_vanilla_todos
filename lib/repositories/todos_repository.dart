@@ -36,8 +36,6 @@ class TodosRepository {
   static Future<Todo> createTodo(String todoTitle) async {
     final box = await Hive.openBox<Todo>(todosBoxName);
 
-    await Future.delayed(const Duration(seconds: 2));
-
     final createdTodo = Todo(
       id: const Uuid().v4(),
       title: todoTitle,
@@ -58,8 +56,6 @@ class TodosRepository {
 
   static Future<void> deleteTodo(String todoId) async {
     final box = await Hive.openBox<Todo>(todosBoxName);
-
-    await Future.delayed(const Duration(seconds: 2));
 
     return box.delete(todoId);
   }
