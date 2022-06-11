@@ -8,8 +8,11 @@ import 'package:flutter_vanilla_todos/todos/widgets/todos_list_widget.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 class TodosPage extends StatefulWidget {
+  final List<Todo> initialTodos;
+
   const TodosPage({
     super.key,
+    required this.initialTodos,
   });
 
   @override
@@ -22,7 +25,7 @@ class _TodosPageState extends State<TodosPage> {
 
   final TextEditingController todosController = TextEditingController();
 
-  List<Todo> todos = [];
+  late List<Todo> todos;
 
   StreamSubscription<BoxEvent>? todosBoxEventStreamSubscription;
 
@@ -30,21 +33,9 @@ class _TodosPageState extends State<TodosPage> {
   void initState() {
     super.initState();
 
-    getAndSetInitialTodos();
+    todos = widget.initialTodos;
 
     initializeTodosStreamHandler();
-  }
-
-  Future<void> getAndSetInitialTodos() async {
-    final todos = await TodosRepository.getTodos();
-
-    setState(() => this.todos = todos);
-
-    for (var i = 0; i < todos.length; i++) {
-      animatedListKey.currentState!.insertItem(
-        i,
-      );
-    }
   }
 
   Future<void> initializeTodosStreamHandler() async {
