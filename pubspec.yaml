@@ -20,6 +20,12 @@ dev_dependencies:
   flutter_lints: ^2.0.0
   hive_generator: ^1.1.3
 
+flutter_native_splash:
+  android: true
+  ios: true
+  color: "#fafafa"
+  image: assets/splash_icon.png
+
 flutter_icons:
   android: true
   ios: true
