@@ -13,3 +13,10 @@ This was built as a challenge to see if a simple app could be built, only with t
 - [ ] Todo details
 - [ ] Edit todo
 - [ ] Firestore persistence
+- [ ] Native splash screen
+- [ ] Splash screen
+- [ ] Launcher icon
+- [ ] Dark mode support
+- [ ] Login page
+- [ ] Register page
+- [ ] User based todos
