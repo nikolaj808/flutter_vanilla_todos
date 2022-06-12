@@ -24,7 +24,7 @@ class _SplashPageState extends State<SplashPage> {
 
     if (!mounted) return;
 
-    Navigator.of(context).push(
+    Navigator.of(context).pushReplacement(
       MaterialPageRoute<void>(
         builder: (context) => TodosPage(initialTodos: todos),
       ),
