@@ -5,14 +5,14 @@ import 'package:flutter_vanilla_todos/todos/widgets/todo_list_item_widget.dart';
 class TodosList extends StatelessWidget {
   final GlobalKey<AnimatedListState> animatedListKey;
   final List<Todo> todos;
-  final void Function(Todo changedTodo, bool isComplete) onTodoChanged;
+  final void Function(Todo changedTodo, bool isComplete) onTodoCompleteToggled;
   final void Function(int index, Todo deletedTodo) onTodoDelete;
 
   const TodosList({
     super.key,
     required this.animatedListKey,
     required this.todos,
-    required this.onTodoChanged,
+    required this.onTodoCompleteToggled,
     required this.onTodoDelete,
   });
 
@@ -31,7 +31,7 @@ class TodosList extends StatelessWidget {
           animation: animation,
           index: index,
           todo: todo,
-          onTodoChanged: onTodoChanged,
+          onTodoCompleteToggled: onTodoCompleteToggled,
           onTodoDelete: onTodoDelete,
         );
       },

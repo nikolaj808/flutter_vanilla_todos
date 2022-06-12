@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_vanilla_todos/todos/todos_page.dart';
+import 'package:flutter_vanilla_todos/splash/splash_page.dart';
 
 class App extends StatelessWidget {
   const App({
@@ -10,7 +10,7 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return const MaterialApp(
       title: 'Flutter Vanilla Todos',
-      home: TodosPage(),
+      home: SplashPage(),
     );
   }
 }

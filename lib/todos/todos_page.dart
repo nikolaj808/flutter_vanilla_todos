@@ -8,8 +8,11 @@ import 'package:flutter_vanilla_todos/todos/widgets/todos_list_widget.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 class TodosPage extends StatefulWidget {
+  final List<Todo> initialTodos;
+
   const TodosPage({
     super.key,
+    required this.initialTodos,
   });
 
   @override
@@ -22,7 +25,7 @@ class _TodosPageState extends State<TodosPage> {
 
   final TextEditingController todosController = TextEditingController();
 
-  List<Todo> todos = [];
+  late List<Todo> todos;
 
   StreamSubscription<BoxEvent>? todosBoxEventStreamSubscription;
 
@@ -30,21 +33,18 @@ class _TodosPageState extends State<TodosPage> {
   void initState() {
     super.initState();
 
-    getAndSetInitialTodos();
+    todos = widget.initialTodos;
 
     initializeTodosStreamHandler();
   }
 
-  Future<void> getAndSetInitialTodos() async {
-    final todos = await TodosRepository.getTodos();
+  @override
+  void dispose() {
+    todosBoxEventStreamSubscription?.cancel();
 
-    setState(() => this.todos = todos);
+    todosController.dispose();
 
-    for (var i = 0; i < todos.length; i++) {
-      animatedListKey.currentState!.insertItem(
-        i,
-      );
-    }
+    super.dispose();
   }
 
   Future<void> initializeTodosStreamHandler() async {
@@ -77,24 +77,17 @@ class _TodosPageState extends State<TodosPage> {
     });
   }
 
-  @override
-  void dispose() {
-    todosBoxEventStreamSubscription?.cancel();
-
-    todosController.dispose();
-
-    super.dispose();
-  }
-
   void onNewTodoSubmit(String title) {
     TodosRepository.createTodo(title);
 
     todosController.clear();
   }
 
-  void onTodoChanged(Todo changedTodo, bool isComplete) {
+  void onTodoCompleteToggled(Todo changedTodo, bool isComplete) {
     TodosRepository.updateTodo(changedTodo.toggleComplete());
   }
+
+  void onTodoEditPressed(Todo todo) {}
 
   void onTodoDelete(int index, Todo deletedTodo) {
     TodosRepository.deleteTodo(deletedTodo.id);
@@ -133,7 +126,7 @@ class _TodosPageState extends State<TodosPage> {
                 child: TodosList(
                   animatedListKey: animatedListKey,
                   todos: todos,
-                  onTodoChanged: onTodoChanged,
+                  onTodoCompleteToggled: onTodoCompleteToggled,
                   onTodoDelete: onTodoDelete,
                 ),
               ),
