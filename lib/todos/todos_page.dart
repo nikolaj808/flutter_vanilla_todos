@@ -38,6 +38,15 @@ class _TodosPageState extends State<TodosPage> {
     initializeTodosStreamHandler();
   }
 
+  @override
+  void dispose() {
+    todosBoxEventStreamSubscription?.cancel();
+
+    todosController.dispose();
+
+    super.dispose();
+  }
+
   Future<void> initializeTodosStreamHandler() async {
     final todosBoxEventStream = await TodosRepository.getTodosStream();
 
@@ -68,24 +77,17 @@ class _TodosPageState extends State<TodosPage> {
     });
   }
 
-  @override
-  void dispose() {
-    todosBoxEventStreamSubscription?.cancel();
-
-    todosController.dispose();
-
-    super.dispose();
-  }
-
   void onNewTodoSubmit(String title) {
     TodosRepository.createTodo(title);
 
     todosController.clear();
   }
 
-  void onTodoChanged(Todo changedTodo, bool isComplete) {
+  void onTodoCompleteToggled(Todo changedTodo, bool isComplete) {
     TodosRepository.updateTodo(changedTodo.toggleComplete());
   }
+
+  void onTodoEditPressed(Todo todo) {}
 
   void onTodoDelete(int index, Todo deletedTodo) {
     TodosRepository.deleteTodo(deletedTodo.id);
@@ -124,7 +126,7 @@ class _TodosPageState extends State<TodosPage> {
                 child: TodosList(
                   animatedListKey: animatedListKey,
                   todos: todos,
-                  onTodoChanged: onTodoChanged,
+                  onTodoCompleteToggled: onTodoCompleteToggled,
                   onTodoDelete: onTodoDelete,
                 ),
               ),

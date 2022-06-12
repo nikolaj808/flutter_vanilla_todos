@@ -5,7 +5,7 @@ class TodoListItem extends StatelessWidget {
   final Animation<double> animation;
   final int index;
   final Todo todo;
-  final void Function(Todo changedTodo, bool isComplete) onTodoChanged;
+  final void Function(Todo changedTodo, bool isComplete) onTodoCompleteToggled;
   final void Function(int index, Todo deletedTodo) onTodoDelete;
 
   const TodoListItem({
@@ -13,7 +13,7 @@ class TodoListItem extends StatelessWidget {
     required this.animation,
     required this.index,
     required this.todo,
-    required this.onTodoChanged,
+    required this.onTodoCompleteToggled,
     required this.onTodoDelete,
   });
 
@@ -40,8 +40,11 @@ class TodoListItem extends StatelessWidget {
                     : null,
               ),
             ),
-            secondary: const Icon(Icons.task_outlined),
-            onChanged: (isComplete) => onTodoChanged(
+            secondary: IconButton(
+              onPressed: () {},
+              icon: const Icon(Icons.edit),
+            ),
+            onChanged: (isComplete) => onTodoCompleteToggled(
               todo,
               isComplete ?? false,
             ),
